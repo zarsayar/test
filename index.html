@@ -54,7 +54,65 @@
             --color-results-bg: #3a3226; /* Darker gold-ish bg */
             --color-results-border: #b45309; /* amber-700 */
         }
+		/*
+		 * ------------------------------------------------
+		 * 1. IranSans - وزن معمولی (Normal)
+		 * ------------------------------------------------
+		 */
+		@font-face {
+			font-family: 'IranSans';
+			/* تعریف مسیر و فرمت‌ها بر اساس اولویت مرورگرها */
+			src: url('IRAN Sans Regular.woff2') format('woff2'),
+				 url('IRAN Sans Regular.woff') format('woff');
+			
+			/* تنظیمات فنی فونت */
+			font-weight: 400; /* معادل وزن normal */
+			font-style: normal;
+			
+			/* بهینه‌سازی بارگذاری: اطمینان از نمایش سریع متن در حین بارگذاری فونت */
+			font-display: swap; 
+		}
 
+		/*
+		 * ------------------------------------------------
+		 * 2. IranSans - وزن پررنگ (Bold)
+		 * ------------------------------------------------
+		 */
+		@font-face {
+			font-family: 'IranSans';
+			src: url('IRAN Sans Bold.woff2') format('woff2'),
+				 url('IRAN Sans Bold.woff') format('woff');
+				 
+			font-weight: 700; /* معادل وزن bold */
+			font-style: normal;
+			font-display: swap;
+		}
+
+		/*
+		 * ------------------------------------------------
+		 * 3. IranSans - وزن نازک/سبک (Light)
+		 * ------------------------------------------------
+		 */
+		@font-face {
+			font-family: 'IranSans';
+			src: url('IRANSans Light.woff2') format('woff2'),
+				 url('IRANSans Light.woff') format('woff');
+				 
+			font-weight: 400; /* معادل وزن light */
+			font-style: normal;
+			font-display: swap;
+		}
+
+		/*
+		 * ------------------------------------------------
+		 * اعمال فونت به بدنه سند
+		 * ------------------------------------------------
+		 */
+		body {
+			/* استفاده از فونت تعریف شده و fallback به sans-serif سیستمی */
+			font-family: "IranSans", sans-serif;
+			direction: rtl; /* تنظیم جهت نوشتار برای زبان فارسی */
+		}
         /* Base styles and main font */
         body {
             font-family: "IranSans", sans-serif;
