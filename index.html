@@ -514,10 +514,6 @@
                 </button>
             </div>
             <div id="tools-menu" class="flex flex-col">
-                <button id="btn-tab1" class="tab-button group flex items-center p-4 my-1 md:my-2 rounded-xl md:rounded-l-xl md:rounded-r-none border-t-4 md:border-t-0 md:border-r-4 border-transparent transition-all duration-300">
-                    <span class="icon-placeholder"><i class="fas fa-balance-scale-left text-xl md:text-2xl"></i></span>
-                    <div class="tab-button-content">محاسبه وزن طلا</div>
-                </button>
                 <button id="btn-tab2" class="tab-button group flex items-center p-4 my-1 md:my-2 rounded-xl md:rounded-l-xl md:rounded-r-none border-t-4 md:border-t-0 md:border-r-4 border-transparent transition-all duration-300">
                     <span class="icon-placeholder"><i class="fas fa-calculator text-xl md:text-2xl"></i></span>
                     <div class="tab-button-content">محاسبه‌گر جامع</div>
@@ -525,6 +521,10 @@
                 <button id="btn-tab3" class="tab-button group flex items-center p-4 my-1 md:my-2 rounded-xl md:rounded-l-xl md:rounded-r-none border-t-4 md:border-t-0 md:border-r-4 border-transparent transition-all duration-300">
                     <span class="icon-placeholder"><i class="fas fa-ring text-xl md:text-2xl"></i></span>
                     <div class="tab-button-content">محاسبه طلای کهنه</div>
+                </button>
+				<button id="btn-tab1" class="tab-button group flex items-center p-4 my-1 md:my-2 rounded-xl md:rounded-l-xl md:rounded-r-none border-t-4 md:border-t-0 md:border-r-4 border-transparent transition-all duration-300">
+                    <span class="icon-placeholder"><i class="fas fa-balance-scale-left text-xl md:text-2xl"></i></span>
+                    <div class="tab-button-content">محاسبه وزن طلا</div>
                 </button>
                 <button id="btn-tab6" class="tab-button group flex items-center p-4 my-1 md:my-2 rounded-xl md:rounded-l-xl md:rounded-r-none border-t-4 md:border-t-0 md:border-r-4 border-transparent transition-all duration-300">
                     <span class="icon-placeholder"><i class="fas fa-fire text-xl md:text-2xl"></i></span>
@@ -608,7 +608,7 @@
                     </div>
                 </div>
                 <button id="calculateBtn1" class="btn-gold-gradient w-full py-2 sm:py-3 rounded-lg text-sm sm:text-base font-bold mt-4 sm:mt-6">
-                    محاسبه و ذخیره
+                    محاسبه
                 </button>
 
                 <div class="results mt-4 sm:mt-6 p-3 sm:p-5 bg-results-bg rounded-lg border border-results-border">
@@ -671,7 +671,7 @@
                     </div>
                 </div>
                 <button id="calculateBtn2" class="btn-gold-gradient w-full py-2 sm:py-3 rounded-lg text-sm sm:text-base font-bold mt-4 sm:mt-6">
-                    محاسبه و ذخیره
+                    محاسبه
                 </button>
 
                 <div class="results mt-4 sm:mt-6 p-3 sm:p-5 bg-results-bg rounded-lg border border-results-border">
@@ -715,7 +715,7 @@
                     </div>
                 </div>
                 <button id="calculateBtn3" class="btn-gold-gradient w-full py-2 sm:py-3 rounded-lg text-sm sm:text-base font-bold mt-4 sm:mt-6">
-                    محاسبه و ذخیره
+                    محاسبه
                 </button>
 
                 <div class="results mt-4 sm:mt-6 p-3 sm:p-5 bg-results-bg rounded-lg border border-results-border">
@@ -4282,7 +4282,7 @@
             
             this.Tools.init();
             this.Navbar.init();
-            this.UI.showTab('tab-column1');
+            this.UI.showTab('tab-column2');
             
             // Apply custom tool order on startup
             const savedToolOrder = JSON.parse(localStorage.getItem('settingToolOrder') || 'null');
