@@ -1162,7 +1162,7 @@
 
                         <div class="responsive-input-group flex flex-col">
                             <label for="settingStoreName" class="text-sm font-semibold text-dark-text mb-2">نام فروشگاه:</label>
-                            <input type="text" id="settingStoreName" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: جواهری فانی">
+                            <input type="text" id="settingStoreName" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: جواهری قصر">
                         </div>
                         <div class="responsive-input-group flex flex-col">
                             <label for="settingStorePhone" class="text-sm font-semibold text-dark-text mb-2">شماره تماس:</label>
@@ -1170,7 +1170,7 @@
                         </div>
                         <div class="responsive-input-group flex flex-col col-span-1 md:col-span-2">
                             <label for="settingStoreAddress" class="text-sm font-semibold text-dark-text mb-2">آدرس:</label>
-                            <input type="text" id="settingStoreAddress" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: خوی، مجتمع تجاری ...">
+                            <input type="text" id="settingStoreAddress" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: تبریز، خیابان ...">
                         </div>
                         <div class="responsive-input-group flex flex-col col-span-1 md:col-span-2">
                             <label for="settingInvoiceFooter" class="text-sm font-semibold text-dark-text mb-2">متن پاورقی فاکتور:</label>
@@ -3270,7 +3270,7 @@
                     fetchedFrom = "";
                 } catch (error) {
                     console.error("Could not fetch prices from primary source:", error);
-                    App.UI.showMessage("خطا در دریافت قیمت‌های لحظه‌ای.");
+                    // App.UI.showMessage("خطا در دریافت قیمت‌های لحظه‌ای.");
                     return;
                 }
 
@@ -4051,7 +4051,7 @@
                 }
                 
                 // Get settings from localStorage with fallbacks
-                const storeName = localStorage.getItem('settingStoreName') || 'جواهری فانی';
+                const storeName = localStorage.getItem('settingStoreName') || 'جواهری ملک‌فر';
                 const storeAddress = localStorage.getItem('settingStoreAddress') || 'آدرس شما';
                 const storePhone = localStorage.getItem('settingStorePhone') || 'شماره تماس شما';
                 const storeLogoUrl = localStorage.getItem('settingStoreLogo') || 'logo.png'; // Fallback to logo.png
