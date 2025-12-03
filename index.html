@@ -420,13 +420,6 @@
              transform: none; /* Disable lift in expanded mode for better stacking */
         }
 
-        @media (max-width: 500px) {
-            .navbar-top.expanded .navbar-content-wrapper > * {
-                width: 100%; 
-            }
-        }
-
-
         .navbar-top span strong {
             /* TYPOGRAPHY REFINEMENT: PRICE DOMINANCE */
             font-family: 'Roboto Condensed','Space Mono', 'Roboto Mono', monospace; 
@@ -718,7 +711,8 @@
 
     <div class="navbar-top no-print">
         <div class="navbar-content-wrapper">
-            <span class="last-updated-span">
+            <span class="last-updated-span" id="refresh-price-btn" title="برای بروزرسانی لحظه‌ای قیمت‌ها کلیک کنید">
+			<i class="fas fa-sync-alt ml-2" id="refresh-icon"></i>
                 <strong id="display-last-updated">--</strong>
             </span>
             <span>گرم: <strong id="display-gold18k-price">--</strong> </span>
@@ -3500,7 +3494,56 @@
                         App.Invoice.updateAllItemPrices();
                     }
             },
+			
+            initRefreshButton: function() {
+                const refreshBtn = document.getElementById('refresh-price-btn');
+                const refreshIcon = document.getElementById('refresh-icon');
+                const updateText = document.getElementById('display-last-updated');
 
+                if (!refreshBtn) return;
+
+                refreshBtn.addEventListener('click', async (e) => {
+                    e.preventDefault(); // جلوگیری از رفتارهای پیش‌فرض احتمالی
+
+                    // ۱. جلوگیری از کلیک مجدد در حین بارگذاری
+                    if (refreshBtn.classList.contains('is-loading')) return;
+
+                    // ۲. شروع حالت بارگذاری (Loading State)
+                    refreshBtn.classList.add('is-loading');
+                    
+                    // تغییر آیکون به حالت چرخان
+                    if (refreshIcon) {
+                        refreshIcon.classList.remove('fa-sync-alt');
+                        refreshIcon.classList.add('fa-spinner', 'fa-spin'); // fa-spin کلاس خود FontAwesome برای چرخش است
+                    }
+                    
+                    // تغییر متن به وضعیت در حال دریافت
+                    if (updateText) updateText.textContent = 'در حال دریافت...';
+
+                    try {
+                        // ۳. فراخوانی تابع اصلی دریافت قیمت (که قبلاً در کد شما وجود دارد)
+                        // چون این تابع async است، منتظر می‌مانیم تا تمام شود
+                        await App.UI.fetchLivePrices();
+                        
+                        // ۴. افکت موفقیت (فلش طلایی)
+                        refreshBtn.classList.add('price-updated');
+                        setTimeout(() => {
+                            refreshBtn.classList.remove('price-updated');
+                        }, 1000);
+
+                    } catch (error) {
+                        console.error("Refresh failed:", error);
+                        if (updateText) updateText.textContent = 'خطا';
+                    } finally {
+                        // ۵. پایان حالت بارگذاری و بازگشت به حالت اولیه
+                        refreshBtn.classList.remove('is-loading');
+                        if (refreshIcon) {
+                            refreshIcon.classList.remove('fa-spinner', 'fa-spin');
+                            refreshIcon.classList.add('fa-sync-alt');
+                        }
+                    }
+                });
+            },
             fetchLivePrices: async function() {
                 const CF_WORKER_URL = 'https://gold.sporm.workers.dev/latest';
                 let data = null;
@@ -3558,7 +3601,7 @@
                     } else if (timeFormat === 'time') {
                         formattedTime = new Intl.DateTimeFormat('fa-IR', { timeStyle: 'short', timeZone: 'Asia/Tehran', numberingSystem: 'arab' }).format(updateDate);
                     } else { // relative
-                        if (diffSeconds < 30) formattedTime = `لحظاتی پیش`;
+                        if (diffSeconds < 59) formattedTime = `لحظاتی پیش`;
                         else if (diffSeconds < 3600) formattedTime = `${Math.floor(diffSeconds / 60)} دقیقه پیش`;
                         else formattedTime = `${Math.floor(diffSeconds / 3600)} ساعت پیش`;
                     }
@@ -4525,6 +4568,7 @@
             
             this.Tools.init();
             this.Navbar.init();
+			this.UI.initRefreshButton();
             this.UI.showTab('tab-column2');
             
             // Apply custom tool order on startup
