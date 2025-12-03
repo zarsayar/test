@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* Main CSS variables for the application theme */
         :root {
@@ -253,88 +254,197 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* --- Top Info Navbar Styles --- */
+ 
+/* --- Top Info Navbar Styles (MODERN REDESIGN) --- */
         .navbar-top {
-            background-color: var(--color-gold-dark);
-            color: #333;
-            padding: 10px 20px;
-            font-size: 0.9rem;
+            /* TRUE DARK GOLDEN GLASSMORHISM IMPLEMENTATION */
+            
+            /* Base transparent color set to a dark color for contrast */
+            background-color: rgba(17, 24, 39, 0.5); /* Darker, semi-transparent base */
+            backdrop-filter: blur(12px); /* Increased blur for stronger glass effect */
+            -webkit-backdrop-filter: blur(12px); 
+            
+            /* The overall text color must be LIGHT for contrast on the dark glass */
+            color: white; 
+            
+            padding: 10px 15px; /* More padding for a luxury feel */
+            font-size: 0.85rem;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            
+            /* Modern shadow: less heavy, more glow */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.1); 
+            
+            /* Subtle Glass Border (instead of the thick border-bottom) */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            
+            /* Remove left/right borders for cleaner full-width integration */
+            border-left: none; 
+            border-right: none; 
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: padding 0.3s ease;
+            transition: all 0.4s ease; /* Enhanced transition */
         }
 
         .navbar-content-wrapper {
             display: flex;
             flex-wrap: nowrap;
-            gap: 15px;
+            gap: 10px;  /* Slightly increased gap for visual separation */
             align-items: center; 
-            overflow: hidden; /* Hide items that don't fit on one line */
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
             flex-grow: 1;
-            min-width: 0; /* Prevent flex items from overflowing the container */
+            min-width: 0;
+            padding-right: 5px; 
+        }
+
+        /* Hide scrollbar for webkit browsers (Chrome, Safari) */
+        .navbar-content-wrapper::-webkit-scrollbar {
+            display: none;
         }
 
         .navbar-top.expanded .navbar-content-wrapper { 
             flex-wrap: wrap;
-            justify-content: flex-start; /* چینش از راست در حالت باز شده */
-            padding-bottom: 10px;
+            justify-content: flex-start;
+            padding-bottom: 5px;
         }
 
         .navbar-content-wrapper > * {
+            /* MODERN GLASS PILL STYLE */
             white-space: nowrap;
             font-weight: 500;
             flex-shrink: 0;
-            display: block; /* Default display */
-        }
-
-        /* This class is added by JavaScript to hide items */
-        .navbar-content-wrapper > .nav-item-hidden {
-            display: none;
-        }
-
-        /* In expanded mode, hidden items are displayed */
-        .navbar-top.expanded .navbar-content-wrapper > .nav-item-hidden {
             display: block;
+            padding: 4px 4px;  
+            border-radius: 8px; /* More modern rounding */
+            
+            /* Glass-on-Glass Look */
+            background-color: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle boundary */
+            
+            border-right: none; /* Removed thick gold border for cleaner look */
+            
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.1); /* Soft gold glow */
+            cursor: pointer; 
+            color: white; /* Base text color for the pill */
+            transition: all 0.25s ease;
         }
         
-        .navbar-top span strong {
-            font-weight: 700;
-            color: rgb(98, 37, 37);
+        /* HOVER STATE: Subtle Lift and Strong Gold Accent (UX Feedback) */
+        .navbar-content-wrapper > *:hover {
+            background-color: rgba(255, 215, 0, 0.1); /* Gold tint on hover */
+            border: 1px solid var(--color-gold-accent); /* Solid gold border for focus */
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); /* Stronger gold glow */
+            transform: translateY(-2px); /* Subtle lift effect (Professional Micro-Interaction) */
+            color: white; 
         }
 
-        #navbar-toggle-btn {
-            /* This button's visibility is controlled by JavaScript */
-            background: transparent;
-            border: none;
-            color: #333;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 5px;
-            margin-right: 10px; /* فاصله در حالت راست‌چین */
+        /* NEW: Hover state for the STRONG tag (the price number) */
+        .navbar-content-wrapper > *:hover strong {
+            color: var(--color-gold-light) !important; /* Change price text to the lightest gold on hover */
+        }
+
+
+        /* --- Toggler/Arrow Styling FIX --- */
+        
+        /* A stronger selector for the arrow button/icon */
+        .navbar-top .toggler,
+        .navbar-top .toggler i,
+        .navbar-top > button,
+        .navbar-top > button * {
+            color: var(--color-gold-accent) !important; /* Gold for visibility on dark glass */
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        /* Rotation on expansion (UX) */
+        .navbar-top.expanded .toggler,
+        .navbar-top.expanded button i {
+            transform: rotate(180deg);
+        }
+
+        .navbar-top.expanded .navbar-content-wrapper > * {
+            text-align: right;
+            margin-bottom: 5px;
+            border-right: none;
+            /* In expanded mode, switch to a strong bottom gold border */
+            border-bottom: 3px solid var(--color-gold-accent); 
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly more prominent background in expanded view */
+        }
+        
+        .navbar-top.expanded .navbar-content-wrapper > *:hover {
+             border-bottom-width: 5px; 
+             border-bottom-color: var(--color-gold-light);
+             background-color: rgba(255, 215, 0, 0.15);
+             transform: none; /* Disable lift in expanded mode for better stacking */
+        }
+
+        @media (max-width: 500px) {
+            .navbar-top.expanded .navbar-content-wrapper > * {
+                width: 100%; 
+            }
+        }
+
+
+        .navbar-top span strong {
+            /* TYPOGRAPHY REFINEMENT: PRICE DOMINANCE */
+            font-family: 'Roboto Condensed','Space Mono', 'Roboto Mono', monospace; 
+			
+            font-weight: 900; /* Bolder */
+            color: var(--color-gold-light); /* Price is GOLD by default for strong hierarchy */
+            margin-right: 4px; 
+            font-size: 1.03rem; /* Increased size */
+            transition: color 0.2s ease; 
+        }
+
+        /* Keyframes for a quick flash or transition */
+		@keyframes flash-gold {
+		  0% { box-shadow: 0 0 15px var(--color-gold-light); }
+		  100% { box-shadow: none; }
+		}
+
+		.navbar-content-wrapper > *.price-updated {
+			animation: flash-gold 0.5s ease-out 1; 
+			background-color: rgba(255, 215, 0, 0.2); 
+		}
+
+        /* For the 'last updated' span: Distinct Gold Status Badge */
+        .last-updated-span {
+            /* Adapted for dark glass background */
+            color: var(--color-gold-light) !important; 
+            background-color: transparent !important;
+            font-size: 0.85rem;
+            font-weight: 700 !important; 
+            padding: 5px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            /* Gold vertical separator */
+            border-right: 1px solid var(--color-gold-light); 
             flex-shrink: 0;
         }
 
-        #navbar-toggle-btn.hidden {
-            display: none;
+        .last-updated-span:hover {
+            color: white !important;
+            border-right-width: 3px;
         }
 
-        #navbar-toggle-btn i {
-            transition: transform 0.3s ease;
+        .navbar-top.expanded .last-updated-span {
+            width: 100%;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: none; 
         }
-
-        .navbar-top.expanded #navbar-toggle-btn i {
-            transform: rotate(180deg);
-        }
-        
+ 
         /* --- Sidebar Tools Menu Styles --- */
         .tools-sidebar {
             transition: width 0.3s ease-in-out;
@@ -539,12 +649,12 @@
                 <strong id="display-last-updated">--</strong>
             </span>
             <span>گرم: <strong id="display-gold18k-price">--</strong> </span>
-            <span>گرم (درهم): <strong id="display-gold18k-dirham-price">--</strong> </span>
+            <span>گرم (AED): <strong id="display-gold18k-dirham-price">--</strong> </span>
             <span>گرم ($): <strong id="display-gold18k-ounce-price">--</strong> </span>
             <span>اونس: <strong id="display-ounce-price">--</strong>$</span>
             <span>مثقال: <strong id="display-mesghal-price">--</strong> </span>
             <span>دلار: <strong id="display-dollar-price">--</strong> </span>
-            <span>دلار (درهم): <strong id="display-dollar-dirham-price">--</strong> </span>
+            <span>دلار (AED): <strong id="display-dollar-dirham-price">--</strong> </span>
             <span>سکه: <strong id="display-sekke-jadid-price">--</strong> </span>
             <span>نیم سکه: <strong id="display-sekke-nim-price">--</strong> </span>
             <span>ربع سکه: <strong id="display-sekke-rob-price">--</strong> </span>
@@ -3373,7 +3483,7 @@
                     } else if (timeFormat === 'time') {
                         formattedTime = new Intl.DateTimeFormat('fa-IR', { timeStyle: 'short', timeZone: 'Asia/Tehran', numberingSystem: 'arab' }).format(updateDate);
                     } else { // relative
-                        if (diffSeconds < 10) formattedTime = `لحظاتی پیش`;
+                        if (diffSeconds < 30) formattedTime = `لحظاتی پیش`;
                         else if (diffSeconds < 3600) formattedTime = `${Math.floor(diffSeconds / 60)} دقیقه پیش`;
                         else formattedTime = `${Math.floor(diffSeconds / 3600)} ساعت پیش`;
                     }
