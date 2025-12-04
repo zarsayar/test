@@ -66,8 +66,8 @@
 		@font-face {
 			font-family: 'IranSans';
 			/* تعریف مسیر و فرمت‌ها بر اساس اولویت مرورگرها */
-			src: url('IRAN Sans Regular.woff2') format('woff2'),
-				 url('IRAN Sans Regular.woff') format('woff');
+			src: url('Assets/Fonts/IRAN Sans Regular.woff2') format('woff2'),
+				 url('Assets/Fonts/IRAN Sans Regular.woff') format('woff');
 			
 			/* تنظیمات فنی فونت */
 			font-weight: 400; /* معادل وزن normal */
@@ -84,8 +84,8 @@
 		 */
 		@font-face {
 			font-family: 'IranSans';
-			src: url('IRAN Sans Bold.woff2') format('woff2'),
-				 url('IRAN Sans Bold.woff') format('woff');
+			src: url('Assets/Fonts/IRAN Sans Bold.woff2') format('woff2'),
+				 url('Assets/Fonts/IRAN Sans Bold.woff') format('woff');
 				 
 			font-weight: 700; /* معادل وزن bold */
 			font-style: normal;
@@ -99,8 +99,8 @@
 		 */
 		@font-face {
 			font-family: 'IranSans';
-			src: url('IRANSans Light.woff2') format('woff2'),
-				 url('IRANSans Light.woff') format('woff');
+			src: url('Assets/Fonts/IRANSans Light.woff2') format('woff2'),
+				 url('Assets/Fonts/IRANSans Light.woff') format('woff');
 				 
 			font-weight: 400; /* معادل وزن light */
 			font-style: normal;
@@ -494,7 +494,7 @@
             }
 
             .tools-sidebar.is-expanded {
-                width: 250px;
+                width: 180px;
             }
 
             .tools-sidebar .tab-button {
@@ -735,9 +735,9 @@
 	<button id="logout-btn" class="logout-botn" 
 			<i class="fas fa-sign-out-alt"></i> خروج
 	</button> 
-	</div>
+
     <!-- Main Application Container -->
-    <div class="main-app-container flex flex-row md:justify-center gap-4 md:gap-10 max-w-7xl mx-auto w-full p-4 md:p-8 rounded-3xl shadow-[0_15px_60px_rgba(0,0,0,0.1)] bg-card-light-bg border border-gold-dark/20 transition-all duration-500 no-print">
+    <div class="main-app-container flex flex-row md:justify-center gap-4 md:gap-5 max-w-7xl mx-auto w-full p-4 md:p-8 rounded-3xl shadow-[0_15px_60px_rgba(0,0,0,0.1)] bg-card-light-bg border border-gold-dark/20 transition-all duration-500 no-print">
 
         <div class="md:w-1/5 flex flex-col justify-start items-stretch min-w-[unset] md:min-w-[200px] tools-sidebar">
             <div class="flex items-center justify-between border-b-2 border-gold-dark pb-2 md:pb-3 mb-4 md:mb-8 flex-shrink-0">
@@ -1730,7 +1730,6 @@
         <option value="916">22 عیار</option>
         <option value="999.9">24 عیار</option>
     </datalist>
-    <script type="module" src="src/js/app.js"></script>
 <script>
     // Main application object to organize the code
     const App = {
@@ -3342,7 +3341,11 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm text-center whitespace-nowrap">
                                     <div class="flex justify-center gap-2">
-                                        <button class="px-3 py-1 text-xs rounded-md text-white transition-colors bg-blue-500 hover:bg-blue-600" data-id="${invoice.id}" data-action="reprint">چاپ</button>
+										<button class="px-3 py-1 text-xs rounded-md text-white transition-colors bg-blue-500 hover:bg-blue-600"
+												data-id="${invoice.id}" data-action="edit">
+											<i class="fas fa-edit ml-1"></i> ویرایش
+										</button>
+                                        <button class="px-3 py-1 text-xs rounded-md text-white transition-colors bg-green-500 hover:bg-blue-600" data-id="${invoice.id}" data-action="reprint">چاپ</button>
                                         <button class="px-3 py-1 text-xs rounded-md text-white transition-colors bg-red-500 hover:bg-red-600" data-id="${invoice.id}" data-action="delete-invoice">حذف</button>
                                     </div>
                                 </td>
@@ -4363,40 +4366,40 @@
                 
 
                 const invoiceContent = `
-<div class="invoice-font-main" style="--invoice-main-font: ${mainFont}; --invoice-numbers-font: ${numbersFont}; direction: rtl; width: 190mm; margin: auto; font-size: ${fontSize}pt; color: ${textColor};">
-    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid ${borderColor}; padding-bottom: 10px; margin-bottom: 15px;">
-        <p style="margin: 4px 0;"><i class="fas fa-map-marker-alt" style="margin-left: 5px; color: ${headerColor};"></i> ${storeAddress}</p>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            ${logoHtml}
-            <h1 style="margin: 5px 0 0; color: ${headerColor}; font-size: ${headerSize}rem; text-align: center;" class="invoice-font-main">${storeName}</h1>
-        </div>
-        <p style="margin: 4px 0;"><i class="fas fa-phone-alt" style="margin-left: 5px; color: ${headerColor};"></i> <span class="invoice-font-numbers">${storePhone}</span></p>
-    </header>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 9pt;">
-        <div><strong>شماره فاکتور:</strong> <span class="invoice-font-numbers">${invoiceNumber}</span></div>
-        <div><strong>نام مشتری:</strong> ${customerName || 'نامشخص'}</div>
-        <div><strong>شماره تماس:</strong> <span class="invoice-font-numbers">${customerPhone || 'نامشخص'}</span></div>
-        <div><strong>تاریخ:</strong> <span class="invoice-font-numbers">${invoiceDate}</span></div>
-    </div>
-    <div style="text-align: center; margin-bottom: 10px; font-size: ${fontSize}pt; background-color: ${finalPriceBgColor}; padding: 5px; border-radius: 5px;">
-        <strong>نرخ هر گرم طلای ۱۸ عیار (۷۵۰) در این فاکتور:</strong> <span class="invoice-font-numbers">${U.formatNumber(Math.round(baseGramPriceForDisplay))}</span> تومان
-    </div>
-    <table style="width: 100%; border-collapse: collapse; font-size: ${tableFontSize}pt; --table-border-color: ${tableBorderColor}; --table-header-bg: ${tableHeaderBgColor}; background-color: ${tableBgColor};">
-        <thead>
-            <tr style="background-color: var(--table-header-bg);">${tableHeaders}</tr>
-        </thead>
-        <tbody>${itemsHtml}</tbody>
-        ${tableFooterHtml}
-    </table>
-    <footer style="margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; font-size: ${footerFontSize}pt;">
-        ${footerHtml}
-        <div style="text-align: center;">
-            <p style="margin-bottom: 25px;">امضای فروشنده</p>
-            <div style="border-top: 1px solid #333; width: 150px;"></div>
-        </div>
-    </footer>
-    ${showFooter ? footnoteHtml : ''}
-</div>`.replace(/<span class="invoice-font-numbers">/g, `<span class="invoice-font-numbers" style="font-family: ${numbersFont};">`);
+					<div class="invoice-font-main" style="--invoice-main-font: ${mainFont}; --invoice-numbers-font: ${numbersFont}; direction: rtl; width: 190mm; margin: auto; font-size: ${fontSize}pt; color: ${textColor};">
+						<header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid ${borderColor}; padding-bottom: 10px; margin-bottom: 15px;">
+							<p style="margin: 4px 0;"><i class="fas fa-map-marker-alt" style="margin-left: 5px; color: ${headerColor};"></i> ${storeAddress}</p>
+							<div style="display: flex; flex-direction: column; align-items: center;">
+								${logoHtml}
+								<h1 style="margin: 5px 0 0; color: ${headerColor}; font-size: ${headerSize}rem; text-align: center;" class="invoice-font-main">${storeName}</h1>
+							</div>
+							<p style="margin: 4px 0;"><i class="fas fa-phone-alt" style="margin-left: 5px; color: ${headerColor};"></i> <span class="invoice-font-numbers">${storePhone}</span></p>
+						</header>
+						<div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 9pt;">
+							<div><strong>شماره فاکتور:</strong> <span class="invoice-font-numbers">${invoiceNumber}</span></div>
+							<div><strong>نام مشتری:</strong> ${customerName || 'نامشخص'}</div>
+							<div><strong>شماره تماس:</strong> <span class="invoice-font-numbers">${customerPhone || 'نامشخص'}</span></div>
+							<div><strong>تاریخ:</strong> <span class="invoice-font-numbers">${invoiceDate}</span></div>
+						</div>
+						<div style="text-align: center; margin-bottom: 10px; font-size: ${fontSize}pt; background-color: ${finalPriceBgColor}; padding: 5px; border-radius: 5px;">
+							<strong>نرخ هر گرم طلای ۱۸ عیار (۷۵۰) در این فاکتور:</strong> <span class="invoice-font-numbers">${U.formatNumber(Math.round(baseGramPriceForDisplay))}</span> تومان
+						</div>
+						<table style="width: 100%; border-collapse: collapse; font-size: ${tableFontSize}pt; --table-border-color: ${tableBorderColor}; --table-header-bg: ${tableHeaderBgColor}; background-color: ${tableBgColor};">
+							<thead>
+								<tr style="background-color: var(--table-header-bg);">${tableHeaders}</tr>
+							</thead>
+							<tbody>${itemsHtml}</tbody>
+							${tableFooterHtml}
+						</table>
+						<footer style="margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; font-size: ${footerFontSize}pt;">
+							${footerHtml}
+							<div style="text-align: center;">
+								<p style="margin-bottom: 25px;">امضای فروشنده</p>
+								<div style="border-top: 1px solid #333; width: 150px;"></div>
+							</div>
+						</footer>
+						${showFooter ? footnoteHtml : ''}
+					</div>`.replace(/<span class="invoice-font-numbers">/g, `<span class="invoice-font-numbers" style="font-family: ${numbersFont};">`);
 
                 // Create a savable object
                 const invoiceDataToSave = {
@@ -4424,6 +4427,64 @@
                 document.getElementById('print-area').innerHTML = invoiceContent;
                 document.getElementById('printInvoiceBtn').classList.remove('hidden');
             },
+			loadInvoiceForEdit: function(invoiceId) {
+				// ۱. خواندن داده‌های فاکتور از پایگاه داده 'invoices'
+				App.DB.getInvoice(invoiceId, (invoiceData) => {
+					if (!invoiceData) {
+						App.UI.showMessage('فاکتور مورد نظر یافت نشد.');
+						return;
+					}
+
+					// ۲. انتقال به تب صدور فاکتور
+					App.UI.showTab('btn-tab4'); // فعال کردن دکمه "صدور فاکتور"
+
+					// ۳. ذخیره ID فاکتور برای استفاده در زمان بروزرسانی
+					this.currentInvoiceData = invoiceData; 
+					
+					// ۴. پاکسازی فرم و پر کردن مشخصات مشتری و تاریخ
+					this.clearInvoiceForm();
+					document.getElementById('customerName').value = invoiceData.customerName || '';
+					document.getElementById('customerName').dataset.customerId = invoiceData.customerId || '';
+					document.getElementById('customerPhone').value = invoiceData.customerPhone || '';
+					// نکته: تاریخ فاکتور (invoiceDate) باید از داده‌های فاکتور بارگذاری شود.
+					document.getElementById('invoiceDate').value = invoiceData.invoiceDate;
+
+					// ۵. پر کردن آیتم‌های طلا
+					document.getElementById('goldItemsContainer').innerHTML = ''; // پاکسازی آیتم‌های قبلی
+					invoiceData.items.forEach(item => {
+						// این بخش نیازمند یک تابع کمکی (Helper) برای ساخت سطر آیتم است 
+						// و پر کردن مقادیر (وزن، اجرت، عیار، شرح کالا) از روی item.
+						// به عنوان مثال: this.addItemRow(item);
+					});
+
+					// ۶. پر کردن بخش تسویه حساب (پرداخت نقدی و طلای کهنه)
+					document.getElementById('cashPayment').value = App.Utils.formatNumber(invoiceData.cashPayment || 0);
+					// ... (سایر فیلدهای پرداخت)
+
+					// ۷. تغییر وضعیت دکمه "صدور فاکتور" به "بروزرسانی فاکتور"
+					document.getElementById('generateInvoiceBtn').textContent = 'بروزرسانی فاکتور (ID: ' + invoiceId + ')';
+					document.getElementById('generateInvoiceBtn').classList.add('bg-orange-500'); // تغییر رنگ برای تمایز
+					
+					this.updateTotal();
+					App.UI.showMessage('فاکتور برای ویرایش بارگذاری شد.', 'info');
+				});
+			},
+
+			// افزودن به App.DB (تابع مورد نیاز برای گرفتن فاکتور)
+			getInvoice: function(id, callback) {
+				if (!this.db) return;
+				const transaction = this.db.transaction(["invoices"], "readonly");
+				const objectStore = transaction.objectStore("invoices");
+				const request = objectStore.get(id);
+
+				request.onsuccess = (event) => {
+					if(callback) callback(event.target.result);
+				};
+				request.onerror = (event) => {
+					console.error(`خطا در گرفتن فاکتور با ID ${id}:`, event.target.error);
+					if(callback) callback(null);
+				};
+			},
             reprintInvoice: function(invoiceId) {
                 if (!App.DB.db) return;
                 const transaction = App.DB.db.transaction(['invoices'], 'readonly');
