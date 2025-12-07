@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simin.Gold</title>
+    <title>ZarSayar</title>
     <link rel="icon" type="image/png" href="Assets/Logo/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -469,6 +469,71 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             border-right: none; 
         }
+        /* --- Rotating Group Styles --- */
+        .rotating-group {
+            /* Style it like a standard pill in normal view */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            min-width: 140px; /* Prevent jitter when text length changes */
+            text-align: center;
+        }
+
+        /* Hover effect for the group */
+        .rotating-group:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--color-gold-accent);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hide all spans inside by default */
+        .rotating-group span {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Show only the active span */
+        .rotating-group span.active-price {
+            display: inline-block;
+        }
+
+        /* --- Expanded View Overrides --- */
+        /* When navbar is expanded, remove the group container styling */
+        .navbar-top.expanded .rotating-group {
+            display: contents; /* The container effectively disappears from DOM layout */
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        /* When expanded, make the spans look like individual pills again */
+        .navbar-top.expanded .rotating-group span {
+            display: block !important; /* Force show all */
+            text-align: right;
+            margin-bottom: 5px;
+            padding: 4px 4px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-bottom: 3px solid var(--color-gold-accent);
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
  
         /* --- Sidebar Tools Menu Styles --- */
         .tools-sidebar {
@@ -562,7 +627,7 @@
 		}
 
 		.logout-botn:hover {
-			background-color: rgba(255, 215, 0, 1); /* Gold tint on hover */
+			background-color: rgb(141, 122, 16); /* Gold tint on hover */
 			color: white; 
 			box-shadow: 0 0 15px var(--color-gold-light);
 		}
@@ -576,6 +641,17 @@
 				font-size: 0.75rem;
 			}
 		}
+        .logout-botn.is-expanded {
+            top: 10px; 
+            transition: top 0.5s ease; /* Smooth transition */
+        }
+
+        /* Hide the logout button on very small screens */
+        @media (max-width: 10px) {
+            .logout-botn.is-expanded {
+                top: 200px; 
+            }
+        }
         /* Style for the message box (for errors and success messages) */
         #messageBox {
             background-color: #4a5568; /* Gray-700 */
@@ -716,8 +792,11 @@
                 <strong id="display-last-updated">--</strong>
             </span>
             <span>گرم: <strong id="display-gold18k-price">--</strong> </span>
-            <span>گرم (AED): <strong id="display-gold18k-dirham-price">--</strong> </span>
-            <span>گرم ($): <strong id="display-gold18k-ounce-price">--</strong> </span>
+            <div class="rotating-group" id="rotating-price-box">
+                <span class="active-price">گرم (AED): <strong id="display-gold18k-dirham-price">--</strong> </span>
+                <span>گرم ($): <strong id="display-gold18k-ounce-price">--</strong> </span>
+                <span>گرم (سکه): <strong id="display-gold18k-sekke-price">--</strong> </span>
+            </div>
             <span>اونس: <strong id="display-ounce-price">--</strong>$</span>
             <span>مثقال: <strong id="display-mesghal-price">--</strong> </span>
             <span>دلار: <strong id="display-dollar-price">--</strong> </span>
@@ -1419,7 +1498,7 @@
                         </div>
                         <div class="responsive-input-group flex flex-col col-span-1 md:col-span-2">
                             <label for="settingAppTitle" class="text-sm font-semibold text-dark-text mb-2">عنوان برنامه (نمایش در تب مرورگر):</label>
-                            <input type="text" id="settingAppTitle" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: Simin.Gold">
+                            <input type="text" id="settingAppTitle" class="w-full p-2 rounded-md border bg-input-bg-light border-input-border-light text-sm" placeholder="مثال: ZarSayar">
                         </div>
                     </div>
                 </div>
@@ -1843,7 +1922,7 @@
                     storePhone: localStorage.getItem('settingStorePhone') || '',
                     defaultProfit: localStorage.getItem('settingDefaultProfit') || '7',
                     defaultVAT: localStorage.getItem('settingDefaultVAT') || '10',
-                    appTitle: localStorage.getItem('settingAppTitle') || 'Simin.Gold',
+                    appTitle: localStorage.getItem('settingAppTitle') || 'ZarSayar',
                     oldGoldDeduction: localStorage.getItem('settingOldGoldDeduction') || '15', // Load new setting
                     storeLogo: localStorage.getItem('settingStoreLogo') || '',
                     invoiceFooter: localStorage.getItem('settingInvoiceFooter') || 'جنس فوق با اجرت مشخص و سود مشخص شده و مالیات ارزش افزوده از اجرت و سود عرضه شده و در موقع فروش با فاکتور و به نرخ روز خریداری خواهد شد.',
@@ -2163,6 +2242,7 @@
                     { id: 'display-gold18k-price', text: 'گرم ۱۸ عیار' },
                     { id: 'display-gold18k-dirham-price', text: ' گرم ۱۸ عیار برحسب درهم' },
                     { id: 'display-gold18k-ounce-price', text: 'گرم (اونس/دلار)' },
+                    { id: 'display-gold18k-sekke-price', text: 'گرم (سکه)' },
                     { id: 'display-ounce-price', text: 'اونس جهانی' },
                     { id: 'display-mesghal-price', text: 'مثقال' },
                     { id: 'display-dollar-price', text: 'دلار' },
@@ -2429,7 +2509,7 @@
                     const a = document.createElement('a');
                     const date = new Date().toLocaleDateString('fa-IR-u-nu-latn').replace(/\//g, '-');
                     a.href = url;
-                    a.download = `simin-gold-backup-${date}.json`;
+                    a.download = `ZarSayar-backup-${date}.json`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -3524,7 +3604,7 @@
                     if (updateText) updateText.textContent = 'در حال دریافت...';
 
                     try {
-                        // ۳. فراخوانی تابع اصلی دریافت قیمت (که قبلاً در کد شما وجود دارد)
+                        // ۳. فراخوانی تابع اصلی دریافت قیمت 
                         // چون این تابع async است، منتظر می‌مانیم تا تمام شود
                         await App.UI.fetchLivePrices();
                         
@@ -3587,11 +3667,49 @@
             
             updateNavbarPrices: function(data, source) {
                 const U = App.Utils;
+
+                // 
                 const updateDisplay = (id, value) => {
                     const el = document.getElementById(id);
-                    if (el) el.parentElement.querySelector('strong').textContent = value !== undefined && !isNaN(value) ? U.formatNumber(Math.round(value)) : '--';
+                    if (el) {
+                        // ۱. هدف‌گیری المان نمایشگر متن قیمت (strong)
+                        const priceTextElement = el.parentElement.querySelector('strong');
+                        
+                        // اطمینان از وجود المان نمایش قیمت و جلوگیری از خطا
+                        if (!priceTextElement) return; 
+
+                        // ۲. خواندن مقدار فعلی و محاسبه مقدار جدید فرمت شده
+                        const currentText = priceTextElement.textContent.trim();
+                        const newValue = value !== undefined && !isNaN(value) ? U.formatNumber(Math.round(value)) : '--';
+
+                        // ۳. فرآیند تشخیص تغییر و اعمال به‌روزرسانی بصری
+                        if (currentText !== newValue.trim()) {
+                            
+                            // A. به‌روزرسانی محتوای متنی
+                            priceTextElement.textContent = newValue;
+                            
+                            // B. هدف‌گیری کانتینر بصری (Pill Element) که کلاس CSS باید به آن اعمال شود.
+                            const pillEl = el.parentElement; 
+                            
+                            // C. حذف کلاس برای آماده‌سازی مرورگر به ریست انیمیشن
+                            pillEl.classList.remove('price-updated'); 
+                            
+                            // D. اجبار به Reflow DOM برای تضمین اجرای مجدد انیمیشن (بسیار حیاتی)
+                            // دسترسی به یک ویژگی هندسی مانند offsetWidth مرورگر را مجبور به Recalculate Style می‌کند.
+                            void pillEl.offsetWidth; 
+                            
+                            // E. اعمال مجدد کلاس برای شروع انیمیشن فلش‌زننده
+                            pillEl.classList.add('price-updated');
+                            
+                            // F. حذف کلاس پس از پایان انیمیشن (550 میلی‌ثانیه برای انیمیشن 0.5 ثانیه‌ای)
+                            setTimeout(() => {
+                                pillEl.classList.remove('price-updated');
+                            }, 550); 
+                        }
+                    }
                 };
-                 const updatedStrongEl = document.getElementById('display-last-updated');
+                
+                const updatedStrongEl = document.getElementById('display-last-updated');
                 if (updatedStrongEl && data.last_update) {
                     const now = new Date();
                     const updateDate = new Date(data.last_update);
@@ -3610,9 +3728,83 @@
                     }
                     updatedStrongEl.parentElement.querySelector('strong').textContent = ` ${formattedTime} ${source}`;
                 }
+                // --- Constants for Gold Price Deviation Gradient ---
+
+                // 1. Define the RGB color endpoints for full saturation
+                // Red (Tailwind red-400: #f87171)
+                const MAX_RED_RGB = [248, 113, 113];
+                // Green (Tailwind green-400: #4ade80)
+                const MAX_GREEN_RGB = [74, 222, 128];
+                // Neutral Gray (for the center point, when diffValue1 is zero)
+                // This should blend well with your overall UI theme's text color.
+                const NEUTRAL_RGB = [150, 150, 150]; 
+
+                // 2. Define the threshold for maximum color saturation (e.g., a 5% difference * 2000 = 100)
+                const MAX_DIFF_THRESHOLD = 100;
+
+                // --- Helper Functions ---
+
+                /**
+                 * Linearly interpolates between two RGB colors based on a factor.
+                 * @param {number[]} color1 - Starting RGB array [R, G, B].
+                 * @param {number[]} color2 - Ending RGB array [R, G, B].
+                 * @param {number} factor - Interpolation factor (0.0 to 1.0).
+                 * @returns {string} - CSS rgb() string.
+                 */
+                function interpolateColor(color1, color2, factor) {
+                    const r = Math.round(color1[0] + factor * (color2[0] - color1[0]));
+                    const g = Math.round(color1[1] + factor * (color2[1] - color1[1]));
+                    const b = Math.round(color1[2] + factor * (color2[2] - color1[2]));
+                    // Ensure values are clamped between 0 and 255
+                    const clampedR = Math.min(255, Math.max(0, r));
+                    const clampedG = Math.min(255, Math.max(0, g));
+                    const clampedB = Math.min(255, Math.max(0, b));
+                    return `rgb(${clampedR}, ${clampedG}, ${clampedB})`;
+                }
+
+                /**
+                 * Calculates a gradient color from neutral to max red/green based on the diff value.
+                 * @param {number} diffValue - The calculated difference value (diffValue1).
+                 * @returns {string} - The dynamic CSS color string.
+                 */
+                function getGradientColor(diffValue) {
+                    if (diffValue === 0) {
+                        // Return neutral color if no difference
+                        return `rgb(${NEUTRAL_RGB[0]}, ${NEUTRAL_RGB[1]}, ${NEUTRAL_RGB[2]})`;
+                    }
+
+                    // 1. Clamp the difference value within the defined threshold
+                    const clampedDiff = Math.min(Math.abs(diffValue), MAX_DIFF_THRESHOLD);
+
+                    // 2. Calculate the intensity factor (0.0 to 1.0)
+                    let factor = clampedDiff / MAX_DIFF_THRESHOLD;
+                    
+                    // Optional: Apply an easing function (e.g., quadratic easing) to make 
+                    // small differences less colorful and large differences more intense.
+                    // factor = factor * factor; // Use this line for quadratic easing
+
+                    // 3. Interpolate the color
+                    if (diffValue > 0) {
+                        // Positive difference (Green)
+                        return interpolateColor(NEUTRAL_RGB, MAX_GREEN_RGB, factor);
+                    } else {
+                        // Negative difference (Red)
+                        return interpolateColor(NEUTRAL_RGB, MAX_RED_RGB, factor);
+                    }
+                }
+                var gold18k_ounce_price = data.gold_ounce_dollar*0.75*(data.dollar_toman/10)/31.1035;
+                var gold18k_dirham_price = data.dirham_toman/10*3.6725*0.75*(data.gold_ounce_dollar)/31.1035;
+                var gold18k_sekke_price = data.sekke_jadid_toman*0.75/(0.9*8.133);
+                var diffValue1 = (data.gold_18k_toman - gold18k_ounce_price) / data.gold_18k_toman * 100;
+                var diffValue2 = (data.gold_18k_toman - gold18k_dirham_price) / data.gold_18k_toman * 100;
+                var diffValue3 = (data.gold_18k_toman - gold18k_sekke_price) / data.gold_18k_toman * 100;
+                document.getElementById('display-gold18k-ounce-price').style.color = getGradientColor(diffValue1*120); // Green (Tailwind green-400)
+                document.getElementById('display-gold18k-dirham-price').style.color = getGradientColor(diffValue2*80);
+                document.getElementById('display-gold18k-sekke-price').style.color = getGradientColor(diffValue3*20);                        
                 updateDisplay('display-gold18k-price', data.gold_18k_toman);
-                updateDisplay('display-gold18k-dirham-price', data.dirham_toman/10*3.6725*0.75*(data.gold_ounce_dollar)/31.1035);
-                updateDisplay('display-gold18k-ounce-price', data.gold_ounce_dollar*0.75*(data.dollar_toman/10)/31.1035);                
+                updateDisplay('display-gold18k-dirham-price', gold18k_dirham_price);
+                updateDisplay('display-gold18k-ounce-price', gold18k_ounce_price);
+                updateDisplay('display-gold18k-sekke-price', gold18k_sekke_price);
                 updateDisplay('display-ounce-price', data.gold_ounce_dollar);
                 updateDisplay('display-mesghal-price', data.gold_mesghal_toman);
                 updateDisplay('display-dollar-price', data.dollar_toman/10);
@@ -3621,7 +3813,6 @@
                 updateDisplay('display-sekke-nim-price', data.sekke_nim_toman);
                 updateDisplay('display-sekke-rob-price', data.sekke_rob_toman);
             },
-
             updateCalculatorPrices: function() {
                 if (App.liveGoldPrice18k > 0) {
                     ['1', '2', '3', '6'].forEach(i => {
@@ -4531,89 +4722,233 @@
         },
 
         Navbar: {
+            rotationInterval: null,
+            currentIndex: 0,
+            navbar: null,
+            container: null,
+            toggleBtn: null,
+            items: [],
+
             init: function() {
                 this.navbar = document.querySelector('.navbar-top');
                 this.container = document.querySelector('.navbar-content-wrapper');
                 this.toggleBtn = document.getElementById('navbar-toggle-btn');
-                this.items = Array.from(this.container.children);
+                
+                // Initial check for items
+                this.updateItemsList();
 
+                // Calculate width and start rotation
+                // We use a small timeout to ensure fonts and DOM are ready
+                setTimeout(() => {
+                    this.calculateFixedSize(); 
+                    this.startRotation();
+                }, 100);
+
+                // Toggle Button Logic (Mobile/Expand)
                 this.toggleBtn.addEventListener('click', () => {
-                    this.navbar.classList.toggle('expanded');
-                    this.setBodyPadding();
+                    this.navbar.classList.toggle('expanded'); 
+                            
+                            //  (Position Displacement)**
+                            document.getElementById('logout-btn').classList.toggle('is-expanded');
+                            
+                            if (this.navbar.classList.contains('expanded')) {
+                        this.stopRotation(); 
+                        // Remove fixed width in expanded mode so items stretch naturally
+                        const box = document.getElementById('rotating-price-box');
+                        if (box) box.style.width = ''; 
+                    } else {
+                        // Recalculate width before starting rotation to prevent jumping
+                        this.calculateFixedSize();
+                        this.startRotation(); 
+                    }
+                    
+                    setTimeout(() => this.adjustItems(), 350); 
                 });
 
+                // Resize Listener
                 let resizeTimeout;
                 window.addEventListener('resize', () => {
                     clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => this.adjustItems(), 100);
+                    resizeTimeout = setTimeout(() => {
+                        // Recalculate width on resize if not expanded
+                        if (!this.navbar.classList.contains('expanded')) {
+                            this.calculateFixedSize();
+                        }
+                        this.adjustItems();
+                    }, 100);
                 });
                 
-                this.adjustItems();
+                document.fonts.ready.then(() => {
+                    this.calculateFixedSize();
+                    this.adjustItems();
+                });
             },
 
-            applyCustomSettings: function(settings) {
-                if (!settings) return;
-                const { order, visibility } = settings;
-                const wrapper = this.container;
+            updateItemsList: function() {
+                if (this.container) {
+                    this.items = Array.from(this.container.children);
+                }
+            },
 
-                // Apply visibility
-                this.items.forEach(item => {
-                    const strongEl = item.querySelector('strong');
-                    if (strongEl && strongEl.id) {
-                        item.style.display = visibility[strongEl.id] === false ? 'none' : '';
+            // NEW FUNCTION: Calculates the widest item and locks the box width
+            calculateFixedSize: function() {
+                const box = document.getElementById('rotating-price-box');
+                if (!box) return;
+
+                // 1. Reset width momentarily to allow measurement
+                box.style.width = 'auto';
+                
+                const spans = box.querySelectorAll('span');
+                let maxWidth = 0;
+                
+                // 2. Measure all spans (even hidden ones)
+                spans.forEach(span => {
+                    // Save current inline styles
+                    const originalCssText = span.style.cssText;
+                    
+                    // Force display block and visibility hidden to measure true width
+                    // 'position: absolute' prevents them from stretching the parent during measure
+                    span.style.cssText = 'display: inline-block; visibility: hidden; position: absolute; white-space: nowrap; font-weight: bold;';
+                    
+                    const width = span.getBoundingClientRect().width;
+                    if (width > maxWidth) {
+                        maxWidth = width;
                     }
+                    
+                    // Restore original styles
+                    span.style.cssText = originalCssText;
                 });
 
-                // Apply order
-                order.forEach(id => {
-                    const itemEl = wrapper.querySelector(`#${id}`)?.parentElement;
-                    if (itemEl) wrapper.appendChild(itemEl);
+                // 3. Apply the max width + a small buffer (e.g. 10px) to the box
+                if (maxWidth > 0) {
+                    // Use Math.ceil to avoid sub-pixel blurring
+                    box.style.width = (Math.ceil(maxWidth) + 12) + 'px';
+                }
+            },
+
+            startRotation: function() {
+                const box = document.getElementById('rotating-price-box');
+                if (!box) return;
+
+                this.stopRotation();
+
+                const spans = box.querySelectorAll('span');
+                if (spans.length === 0) return;
+
+                // Ensure initial state
+                spans.forEach((span, index) => {
+                    if (index === this.currentIndex) span.classList.add('active-price');
+                    else span.classList.remove('active-price');
                 });
-                this.adjustItems();
+
+                this.rotationInterval = setInterval(() => {
+                    spans[this.currentIndex].classList.remove('active-price');
+                    this.currentIndex = (this.currentIndex + 1) % spans.length;
+                    spans[this.currentIndex].classList.add('active-price');
+                }, 5000);
+            },
+
+            stopRotation: function() {
+                if (this.rotationInterval) {
+                    clearInterval(this.rotationInterval);
+                    this.rotationInterval = null;
+                }
+                const box = document.getElementById('rotating-price-box');
+                if(box) {
+                     const spans = box.querySelectorAll('span');
+                     spans.forEach(span => span.classList.remove('active-price'));
+                }
             },
 
             setBodyPadding: function() {
-                const navbarHeight = this.navbar.offsetHeight;
-                document.body.style.paddingTop = `${navbarHeight + 10}px`;
+                if(this.navbar) {
+                    const navbarHeight = this.navbar.offsetHeight;
+                    document.body.style.paddingTop = `${navbarHeight + 10}px`;
+                }
             },
 
             adjustItems: function() {
-                // 1. Reset state for measurement
-                this.items.forEach(item => item.classList.remove('nav-item-hidden'));
-                this.toggleBtn.classList.remove('hidden');
+                this.updateItemsList();
                 
-                const availableWidth = this.container.offsetWidth;
-                const gap = parseInt(getComputedStyle(this.container).gap) || 15;
+                // Whenever items are adjusted (e.g. new prices loaded), recalculate width
+                if (!this.navbar.classList.contains('expanded')) {
+                    this.calculateFixedSize();
+                }
 
+                if (this.navbar.classList.contains('expanded')) {
+                    this.items.forEach(item => item.classList.remove('nav-item-hidden'));
+                    this.toggleBtn.classList.remove('hidden');
+                    return;
+                }
+
+                const availableWidth = this.container.offsetWidth;
+                const gap = 10;
                 let currentWidth = 0;
                 let visibleItemsCount = 0;
 
-                // 2. Find how many items fit
                 for (const item of this.items) {
+                    if (item.style.display === 'none') continue;
+
                     const itemWidth = item.offsetWidth;
                     const widthWithGap = visibleItemsCount > 0 ? itemWidth + gap : itemWidth;
 
                     if ((currentWidth + widthWithGap) > availableWidth) {
-                        break; // Stop when we overflow
+                        break;
                     }
                     currentWidth += widthWithGap;
                     visibleItemsCount++;
                 }
 
-                // 3. If not all items are visible, hide the rest and show the button
                 if (visibleItemsCount < this.items.length) {
-                    this.items.forEach((item, index) => item.classList.toggle('nav-item-hidden', index >= visibleItemsCount));
+                    this.items.forEach((item, index) => {
+                         if (item.style.display !== 'none') {
+                             item.classList.toggle('nav-item-hidden', index >= visibleItemsCount);
+                         }
+                    });
                     this.toggleBtn.classList.remove('hidden');
                 } else {
-                    this.toggleBtn.classList.add('hidden');
-                    this.navbar.classList.remove('expanded');
+                    if (window.innerWidth > 768) {
+                        this.toggleBtn.classList.add('hidden');
+                    } else {
+                        this.toggleBtn.classList.remove('hidden');
+                    }
                     this.items.forEach(item => item.classList.remove('nav-item-hidden'));
                 }
-                
+
                 this.setBodyPadding();
+            },
+
+            applyCustomSettings: function(settings) {
+                if (!settings) return;
+                const { order, visibility } = settings;
+                
+                this.items.forEach(item => {
+                    const idToCheck = item.id || (item.querySelector('strong') ? item.querySelector('strong').id : null);
+                    if (idToCheck && visibility) {
+                        if (visibility[idToCheck] === false) {
+                            item.style.display = 'none';
+                        } else {
+                            item.style.display = '';
+                        }
+                    }
+                });
+
+                if (order && Array.isArray(order)) {
+                    const wrapper = this.container;
+                    order.forEach(id => {
+                        let itemEl = wrapper.querySelector(`#${id}`);
+                        if (!itemEl) {
+                             const strongEl = wrapper.querySelector(`#${id}`);
+                             if (strongEl) itemEl = strongEl.closest('span') || strongEl.closest('div');
+                        }
+                        if (itemEl && itemEl.parentElement === wrapper) {
+                            wrapper.appendChild(itemEl);
+                        }
+                    });
+                }
+                this.adjustItems();
             }
         },
-
         // This function is called only once after a successful login
         initAppLogic: function() {
             this.DB.initDB();
