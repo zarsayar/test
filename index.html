@@ -2631,7 +2631,7 @@
                     return;
                 }
                 // افزایش شماره نسخه برای حل خطای VersionError
-                const request = window.indexedDB.open('SiminGoldDB', 6);
+                const request = window.indexedDB.open('ZarSayarDB', 6);
 
                 request.onerror = (event) => {
                     const error = event.target.error;
@@ -3740,7 +3740,7 @@
                 const NEUTRAL_RGB = [150, 150, 150]; 
 
                 // 2. Define the threshold for maximum color saturation (e.g., a 5% difference * 2000 = 100)
-                const MAX_DIFF_THRESHOLD = 100;
+                const MAX_DIFF_THRESHOLD = 2.91;
 
                 // --- Helper Functions ---
 
@@ -3786,21 +3786,22 @@
                     // 3. Interpolate the color
                     if (diffValue > 0) {
                         // Positive difference (Green)
-                        return interpolateColor(NEUTRAL_RGB, MAX_GREEN_RGB, factor);
+                        return interpolateColor(NEUTRAL_RGB, MAX_RED_RGB, factor);
                     } else {
                         // Negative difference (Red)
-                        return interpolateColor(NEUTRAL_RGB, MAX_RED_RGB, factor);
+                        return interpolateColor(NEUTRAL_RGB, MAX_GREEN_RGB, factor);
                     }
                 }
                 var gold18k_ounce_price = data.gold_ounce_dollar*0.75*(data.dollar_toman/10)/31.1035;
                 var gold18k_dirham_price = data.dirham_toman/10*3.6725*0.75*(data.gold_ounce_dollar)/31.1035;
                 var gold18k_sekke_price = data.sekke_jadid_toman*0.75/(0.9*8.133);
-                var diffValue1 = (data.gold_18k_toman - gold18k_ounce_price) / data.gold_18k_toman * 100;
-                var diffValue2 = (data.gold_18k_toman - gold18k_dirham_price) / data.gold_18k_toman * 100;
-                var diffValue3 = (data.gold_18k_toman - gold18k_sekke_price) / data.gold_18k_toman * 100;
-                document.getElementById('display-gold18k-ounce-price').style.color = getGradientColor(diffValue1*120); // Green (Tailwind green-400)
-                document.getElementById('display-gold18k-dirham-price').style.color = getGradientColor(diffValue2*80);
-                document.getElementById('display-gold18k-sekke-price').style.color = getGradientColor(diffValue3*20);                        
+                offset_value = 100 * (data.gold_18k_toman - 0.03 * data.gold_18k_toman) / data.gold_18k_toman;
+                var diffValue1 = (data.gold_18k_toman - gold18k_ounce_price) / data.gold_18k_toman * offset_value;
+                var diffValue2 = (data.gold_18k_toman - gold18k_dirham_price) / data.gold_18k_toman * offset_value;
+                var diffValue3 = (data.gold_18k_toman - gold18k_sekke_price) / data.gold_18k_toman * offset_value;
+                document.getElementById('display-gold18k-ounce-price').style.color = getGradientColor(diffValue1); // Green (Tailwind green-400)
+                document.getElementById('display-gold18k-dirham-price').style.color = getGradientColor(diffValue2);
+                document.getElementById('display-gold18k-sekke-price').style.color = getGradientColor(diffValue3);                        
                 updateDisplay('display-gold18k-price', data.gold_18k_toman);
                 updateDisplay('display-gold18k-dirham-price', gold18k_dirham_price);
                 updateDisplay('display-gold18k-ounce-price', gold18k_ounce_price);
